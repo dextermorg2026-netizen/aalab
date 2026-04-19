@@ -1,0 +1,44 @@
+public class AssignmentBruteForce {
+
+    static int minCost = Integer.MAX_VALUE;
+
+    public static void solve(int[][] cost, boolean[] used, int worker, int currentCost) {
+
+        int n = cost.length;
+
+        // If all workers are assigned jobs
+        if (worker == n) {
+            minCost = Math.min(minCost, currentCost);
+            return;
+        }
+
+        // Try assigning each job
+        for (int job = 0; job < n; job++) {
+
+            if (!used[job]) {
+
+                used[job] = true;
+
+                solve(cost, used, worker + 1, currentCost + cost[worker][job]);
+
+                used[job] = false; // backtrack
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+
+        int[][] cost = {
+                {9, 2, 7},
+                {6, 4, 3},
+                {5, 8, 1}
+        };
+
+        int n = cost.length;
+        boolean[] used = new boolean[n];
+
+        solve(cost, used, 0, 0);
+
+        System.out.println("Minimum Cost = " + minCost);
+    }
+}
