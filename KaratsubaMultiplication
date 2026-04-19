@@ -1,0 +1,39 @@
+import java.util.*;
+
+public class KaratsubaMultiplication {
+
+    static long multiply(long x, long y) {
+
+        // Base case
+        if (x < 10 || y < 10)
+            return x * y;
+
+        int n = Math.max(Long.toString(x).length(), Long.toString(y).length());
+        int half = n / 2;
+
+        long pow = (long) Math.pow(10, half);
+
+        long a = x / pow;
+        long b = x % pow;
+        long c = y / pow;
+        long d = y % pow;
+
+        long z0 = multiply(b, d);
+        long z1 = multiply(a + b, c + d);
+        long z2 = multiply(a, c);
+
+        return (long)(z2 * Math.pow(10, 2 * half) +
+                (z1 - z2 - z0) * pow +
+                z0);
+    }
+
+    public static void main(String[] args) {
+
+        long x = 1234;
+        long y = 5678;
+
+        long result = multiply(x, y);
+
+        System.out.println("Multiplication Result: " + result);
+    }
+}
